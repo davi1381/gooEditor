@@ -1,3 +1,5 @@
+//! Simplified configuration for slicing a model.
+
 use nalgebra::{Vector2, Vector3};
 
 /// A simplified configuration for slicing a model.

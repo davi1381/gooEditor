@@ -1,3 +1,5 @@
+//! Random types.
+
 use crate::slice_config::SliceConfig;
 
 /// The result of slicing a model.
