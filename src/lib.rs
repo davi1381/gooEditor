@@ -1,4 +1,6 @@
-//! # `goo_format`
+//! # `goo`
+//!
+//! [![Build](https://github.com/connorslade/goo/actions/workflows/build.yml/badge.svg)](https://github.com/connorslade/goo/actions/workflows/build.yml) [![Latest Version](https://img.shields.io/crates/v/goo)](https://crates.io/crates/goo) [![Downloads](https://img.shields.io/crates/d/goo?label=Downloads)](https://crates.io/crates/goo)
 //!
 //! Library for encoding and decoding Elegoo's `.goo` file format.
 //! A binary is also included for inspecting and debugging the sliced goo files, with the option to dump the layers as png images.
