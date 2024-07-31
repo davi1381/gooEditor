@@ -3,8 +3,9 @@ use std::fmt::{self, Debug};
 use anyhow::{ensure, Result};
 
 use crate::{
+    preview_image::PreviewImage,
     serde::{Deserializer, Serializer, SizedString},
-    PreviewImage, DELIMITER, MAGIC_TAG,
+    DELIMITER, MAGIC_TAG,
 };
 
 pub struct HeaderInfo {

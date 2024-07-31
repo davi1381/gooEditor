@@ -3,8 +3,11 @@ use anyhow::{ensure, Result};
 use chrono::Local;
 
 use crate::{
+    header_info::HeaderInfo,
+    layer_content::LayerContent,
+    misc::SliceResult,
     serde::{Deserializer, Serializer, SizedString},
-    HeaderInfo, LayerContent, SliceResult, ENDING_STRING,
+    ENDING_STRING,
 };
 
 pub struct File {

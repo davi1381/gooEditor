@@ -1,4 +1,8 @@
-use crate::{layer_content::calculate_checksum, EncodableLayer, LayerContent, Run, SliceConfig};
+use crate::{
+    layer_content::{calculate_checksum, LayerContent},
+    misc::{EncodableLayer, Run},
+    slice_config::SliceConfig,
+};
 
 pub struct LayerEncoder {
     data: Vec<u8>,

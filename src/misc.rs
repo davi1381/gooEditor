@@ -1,10 +1,11 @@
-use crate::SliceConfig;
+use crate::slice_config::SliceConfig;
 
 pub struct SliceResult<'a, Layer> {
     pub layers: Vec<Layer>,
     pub slice_config: &'a SliceConfig,
 }
 
+#[derive(Debug)]
 pub struct Run {
     pub length: u64,
     pub value: u8,
