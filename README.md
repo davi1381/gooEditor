@@ -3,7 +3,6 @@
 [![Build](https://github.com/connorslade/goo/actions/workflows/build.yml/badge.svg)](https://github.com/connorslade/goo/actions/workflows/build.yml) [![Latest Version](https://img.shields.io/crates/v/goo)](https://crates.io/crates/goo) [![Downloads](https://img.shields.io/crates/d/goo?label=Downloads)](https://crates.io/crates/goo)
 
 Library for encoding and decoding Elegoo's `.goo` file format.
-A binary is also included for inspecting and debugging the sliced goo files, with the option to dump the layers as png images.
 This is a stand alone version of this crate taken from my [mslicer](https://github.com/connorslade/mslicer) project, its an open source slicer for masked stereolithography printers.
 
 If you want to learn more about the goo format, make sure you read the [official format spec](https://github.com/elegooofficial/GOO).
@@ -50,7 +49,7 @@ for run in decoder {
 
 ### Decoding to Images
 
-This example is a simplified version of the included cli to inspect sliced goo files.
+This example is a simplified version of the included example to inspect sliced goo files.
 Note that setting each pixel individually is not very fast, but it was enough for a debugging tool.
 
 ```rust

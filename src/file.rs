@@ -3,6 +3,7 @@ use anyhow::{ensure, Result};
 #[cfg(feature = "chrono")]
 use chrono::Local;
 
+#[allow(unused_imports)]
 use crate::{
     header_info::HeaderInfo,
     layer_content::LayerContent,
