@@ -1,0 +1,11 @@
+[package]
+name = "goo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.86"
+chrono = "0.4.38"
+clap = { version = "4.5.7", features = ["derive"] }
+image = "0.25.1"
+nalgebra = "0.33.0"
