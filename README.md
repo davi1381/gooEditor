@@ -25,8 +25,8 @@ It is important to note that you must define a value for every pixel.
 This is because on my printer at least the buffer that each layer is decoded into is uninitialized memory.
 So if the last run doesn't fill the buffer, the printer will just print whatever was in the buffer before which just makes a huge mess.
 
-```rust
-use goo::{encoded_layer::{LayerEncoder, LayerDecoder}, misc::Run};
+```rust ignore
+use goo::{LayerEncoder, LayerDecoder, Run};
 
 let size = (11520, 5102);
 let mut out = LayerEncoder::new();
@@ -51,11 +51,11 @@ for run in decoder {
 This example is a simplified version of the included cli to inspect sliced goo files.
 Note that setting each pixel individually is not very fast, but it was enough for a debugging tool.
 
-```rust
-use goo::{file::File, encoded_layer::LayerDecoder, misc::Run};
+```rust ignore
+use goo::{GooFile, LayerDecoder, Run};
 
 let raw_goo = fs::read("input.goo")?;
-let goo = File::deserialize(&raw_goo)?;
+let goo = GooFile::deserialize(&raw_goo)?;
 println!("{:#?}", goo.header);
 
 for (i, layer) in goo.layers.iter().enumerate() {

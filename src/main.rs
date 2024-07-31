@@ -6,12 +6,7 @@ use std::{
 
 use anyhow::Result;
 use clap::Parser;
-use goo::{
-    encoded_layer::{LayerDecoder, LayerEncoder},
-    file::File,
-    misc::Run,
-    preview_image::PreviewImage,
-};
+use goo::{misc::Run, GooFile, LayerDecoder, PreviewImage};
 use image::RgbImage;
 
 #[derive(Parser)]
@@ -36,7 +31,7 @@ fn main() -> Result<()> {
     let args = Args::parse();
 
     let raw_goo = fs::read(&args.input_file)?;
-    let goo = File::deserialize(&raw_goo)?;
+    let goo = GooFile::deserialize(&raw_goo)?;
 
     if !args.no_header {
         println!("{:#?}", goo.header);

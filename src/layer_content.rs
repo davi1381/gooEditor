@@ -5,6 +5,9 @@ use crate::{
     DELIMITER,
 };
 
+/// The header of each layer in a `.goo` file.
+///
+/// Check the [official format spec](https://github.com/elegooofficial/GOO) for more information.
 pub struct LayerContent {
     pub pause_flag: u16,
     pub pause_position_z: f32,

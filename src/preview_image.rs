@@ -2,6 +2,9 @@ use image::{imageops::FilterType, RgbaImage};
 
 use crate::serde::{Deserializer, Serializer};
 
+/// A preview image.
+///
+/// Note that the red and blue channels are 5 bits, and the green channel is 6 bits.
 pub struct PreviewImage<const WIDTH: usize, const HEIGHT: usize> {
     // 0brrrrrggggggbbbbb
     data: Box<[u16]>,

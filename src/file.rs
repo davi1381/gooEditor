@@ -10,6 +10,7 @@ use crate::{
     ENDING_STRING,
 };
 
+/// A `.goo` file.
 pub struct File {
     pub header: HeaderInfo,
     pub layers: Vec<LayerContent>,

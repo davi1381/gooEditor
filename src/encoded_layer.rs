@@ -4,11 +4,21 @@ use crate::{
     slice_config::SliceConfig,
 };
 
+/// Encodes a layer into the binary `.goo` layer format.
+///
+/// Make a goo file you need a list of `LayerContent`s that can then be combined with a `HeaderInfo` with `GooFile::new`.
+///
+/// It is important to note that you must define a value for every pixel.
+/// This is because on my printer at least the buffer that each layer is decoded into is uninitialized memory.
+/// So if the last run doesn't fill the buffer, the printer will just print whatever was in the buffer before which just makes a huge mess.
 pub struct LayerEncoder {
     data: Vec<u8>,
     last_value: u8,
 }
 
+/// Decodes a layer from the binary `.goo` layer format.
+///
+/// This struct implements Iterator, you can just loop over it to get all the runs in the layer.
 pub struct LayerDecoder<'a> {
     data: &'a [u8],
     color: u8,

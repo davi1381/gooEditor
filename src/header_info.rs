@@ -8,6 +8,9 @@ use crate::{
     DELIMITER, MAGIC_TAG,
 };
 
+/// The header of a `.goo` file.
+///
+/// Check the [official format spec](https://github.com/elegooofficial/GOO) for more information.
 pub struct HeaderInfo {
     pub version: SizedString<4>,
     pub software_info: SizedString<32>,

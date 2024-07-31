@@ -1,5 +1,6 @@
 use nalgebra::{Vector2, Vector3};
 
+/// A simplified configuration for slicing a model.
 #[derive(Clone, Debug)]
 pub struct SliceConfig {
     pub platform_resolution: Vector2<u32>,

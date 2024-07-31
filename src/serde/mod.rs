@@ -1,3 +1,5 @@
+//! Encoders and decoders for arbitrary binary data.
+
 mod deserializer;
 mod serializer;
 mod types;
