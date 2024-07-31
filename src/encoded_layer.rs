@@ -143,7 +143,7 @@ impl EncodableLayer for LayerEncoder {
             lift_speed: layer_exposure.lift_speed,
             retract_distance: layer_exposure.retract_distance,
             retract_speed: layer_exposure.retract_speed,
-            pause_position_z: slice_config.platform_size.z,
+            pause_position_z: slice_config.platform_size[2],
             ..Default::default()
         }
     }

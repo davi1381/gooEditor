@@ -1,5 +1,6 @@
 use anyhow::{ensure, Result};
 
+#[cfg(feature = "chrono")]
 use chrono::Local;
 
 use crate::{
@@ -41,10 +42,10 @@ impl File {
 
         Self::new(
             HeaderInfo {
-                x_resolution: slice_config.platform_resolution.x as u16,
-                y_resolution: slice_config.platform_resolution.y as u16,
-                x_size: slice_config.platform_size.x,
-                y_size: slice_config.platform_size.y,
+                x_resolution: slice_config.platform_resolution[0] as u16,
+                y_resolution: slice_config.platform_resolution[1] as u16,
+                x_size: slice_config.platform_size[0],
+                y_size: slice_config.platform_size[1],
 
                 layer_count: layers.len() as u32,
                 printing_time: total_time as u32,
@@ -64,6 +65,7 @@ impl File {
                 bottom_retract_distance: slice_config.first_exposure_config.retract_distance,
                 bottom_retract_speed: slice_config.first_exposure_config.retract_speed,
 
+                #[cfg(feature = "chrono")]
                 file_time: SizedString::new(
                     Local::now()
                         .format("%Y-%m-%d %H:%M:%S")

@@ -14,7 +14,19 @@ repository = "https://github.com/connorslade/goo"
 
 [dependencies]
 anyhow = "1.0.86"
-chrono = "0.4.38"
+chrono = { version = "0.4.38", optional = true }
+image = { version = "0.25.1", optional = true }
+
+[dev-dependencies]
+goo = { path = ".", features = ["image"] }
 clap = { version = "4.5.7", features = ["derive"] }
-image = "0.25.1"
-nalgebra = "0.33.0"
+
+[features]
+# This feature adds in the `image` crate and allows you to create a `PreviewImage` from an `image::RgbaImage`.
+image = ["dep:image"]
+
+# This feature adds in the `chrono` crate and correctly fills in the `file_time` field when using `GooFile::from_slice_result`.
+chrono = ["dep:chrono"]
+
+[package.metadata.docs.rs]
+all-features = true

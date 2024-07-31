@@ -1,3 +1,4 @@
+#[cfg(feature = "image")]
 use image::{imageops::FilterType, RgbaImage};
 
 use crate::serde::{Deserializer, Serializer};
@@ -19,6 +20,7 @@ impl<const WIDTH: usize, const HEIGHT: usize> PreviewImage<WIDTH, HEIGHT> {
         }
     }
 
+    #[cfg(feature = "image")]
     pub fn from_image(image: &RgbaImage) -> Self {
         assert_eq!(image.width() as usize, WIDTH);
         assert_eq!(image.height() as usize, HEIGHT);
@@ -41,6 +43,7 @@ impl<const WIDTH: usize, const HEIGHT: usize> PreviewImage<WIDTH, HEIGHT> {
         }
     }
 
+    #[cfg(feature = "image")]
     pub fn from_image_scaled(image: &RgbaImage, filter: FilterType) -> Self {
         let scaled = image::imageops::resize(image, WIDTH as u32, HEIGHT as u32, filter);
         Self::from_image(&scaled)

@@ -1,12 +1,10 @@
 //! Simplified configuration for slicing a model.
 
-use nalgebra::{Vector2, Vector3};
-
 /// A simplified configuration for slicing a model.
 #[derive(Clone, Debug)]
 pub struct SliceConfig {
-    pub platform_resolution: Vector2<u32>,
-    pub platform_size: Vector3<f32>,
+    pub platform_resolution: [u32; 2],
+    pub platform_size: [f32; 3],
     pub slice_height: f32,
 
     pub exposure_config: ExposureConfig,
