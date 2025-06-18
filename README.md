@@ -89,3 +89,42 @@ for (i, layer) in goo.layers.iter().enumerate() {
     image.save(format!("layer_{:03}.png", i))?;
 }
 ```
+
+### Editing Layer Pixels
+
+`LayerContent` exposes helpers for working with the raw pixels of a layer. You
+can decode a layer to a flat vector of grayscale values, modify them and then
+write them back. When the `image` feature is enabled, conversions to and from
+`image::GrayImage` are also available.
+
+```rust
+use goo::LayerContent;
+
+// decode the pixels of the first layer
+let mut pixels = goo.layers[0].decode_pixels(
+    goo.header.x_resolution as u32,
+    goo.header.y_resolution as u32,
+);
+
+// modify some pixels
+pixels[0] = 255;
+
+// write the pixels back into the layer
+goo.layers[0].set_pixels(
+    goo.header.x_resolution as u32,
+    goo.header.y_resolution as u32,
+    &pixels,
+);
+
+// with the `image` feature
+#[cfg(feature = "image")]
+{
+    use image::Luma;
+    let mut img = goo.layers[0].to_image(
+        goo.header.x_resolution as u32,
+        goo.header.y_resolution as u32,
+    );
+    img.put_pixel(0, 0, Luma([0]));
+    goo.layers[0].set_from_image(&img);
+}
+```

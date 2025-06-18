@@ -1,9 +1,14 @@
 use anyhow::{ensure, Result};
 
 use crate::{
+    encoded_layer::{LayerDecoder, LayerEncoder},
+    misc::Run,
     serde::{Deserializer, Serializer},
     DELIMITER,
 };
+
+#[cfg(feature = "image")]
+use image::GrayImage;
 
 /// The header of each layer in a `.goo` file.
 ///
@@ -100,7 +105,7 @@ impl LayerContent {
             second_retract_distance,
             second_retract_speed,
             light_pwm,
-            data: data.to_vec(), // ehhh its fiiiine (its not fine)
+            data: data.to_vec(),
             checksum,
         })
     }
@@ -112,4 +117,65 @@ pub fn calculate_checksum(data: &[u8]) -> u8 {
         out = out.wrapping_add(byte);
     }
     !out
+}
+
+impl LayerContent {
+    /// Decode the pixel data of this layer into a flat `Vec<u8>`.
+    ///
+    /// `width` and `height` should match the resolution of the file.
+    pub fn decode_pixels(&self, width: u32, height: u32) -> Vec<u8> {
+        let mut out = Vec::with_capacity((width * height) as usize);
+        let decoder = LayerDecoder::new(&self.data);
+        for Run { length, value } in decoder {
+            out.extend(std::iter::repeat_n(value, length as usize));
+        }
+        debug_assert_eq!(out.len(), (width * height) as usize);
+        out
+    }
+
+    /// Replace the pixel data of this layer from a flat slice of pixels.
+    ///
+    /// The slice length must match `width * height`.
+    pub fn set_pixels(&mut self, width: u32, height: u32, pixels: &[u8]) {
+        assert_eq!(pixels.len(), (width * height) as usize);
+
+        if pixels.is_empty() {
+            self.data.clear();
+            self.checksum = 0;
+            return;
+        }
+
+        let mut encoder = LayerEncoder::new();
+        let mut run_value = pixels[0];
+        let mut run_length: u64 = 1;
+
+        for &value in &pixels[1..] {
+            if value == run_value {
+                run_length += 1;
+            } else {
+                encoder.add_run(run_length, run_value);
+                run_value = value;
+                run_length = 1;
+            }
+        }
+        encoder.add_run(run_length, run_value);
+
+        let (data, checksum) = encoder.finish();
+        self.data = data;
+        self.checksum = checksum;
+    }
+
+    #[cfg(feature = "image")]
+    /// Convert this layer into an `image::GrayImage`.
+    pub fn to_image(&self, width: u32, height: u32) -> GrayImage {
+        let pixels = self.decode_pixels(width, height);
+        GrayImage::from_vec(width, height, pixels).expect("pixel count matches")
+    }
+
+    #[cfg(feature = "image")]
+    /// Replace this layer's pixel data with the contents of `image`.
+    pub fn set_from_image(&mut self, image: &GrayImage) {
+        let pixels = image.as_raw();
+        self.set_pixels(image.width(), image.height(), pixels);
+    }
 }
