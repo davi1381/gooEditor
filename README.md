@@ -128,3 +128,14 @@ goo.layers[0].set_pixels(
     goo.layers[0].set_from_image(&img);
 }
 ```
+
+### GUI Example
+
+A small example using `eframe` can visualize layers interactively. Run it with:
+
+```bash
+cargo run --example gui
+```
+
+Use the **Open .goo file...** button to choose a file and scroll through its layers.
+=======
