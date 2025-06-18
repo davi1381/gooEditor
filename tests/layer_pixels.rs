@@ -69,3 +69,46 @@ fn display_example_layer() {
     // To see the printed output, run this test with: cargo test -- --nocapture
     assert_eq!(decoded_pixels, pixels);
 }
+
+#[test]
+fn save_and_open_first_layer_from_file() -> anyhow::Result<()> {
+    use goo::GooFile;
+    use image::GrayImage;
+    use std::fs;
+    use std::process::Command;
+
+    let file_path = "/Users/aarondavis/Documents/CodingProjects/gooEditor/Embedded_microfluidic_mixer_0.05_6_2025_06_18_08_55_00.goo";
+    let goo_data = fs::read(file_path)?;
+
+    let goo_file = GooFile::deserialize(&goo_data)?;
+
+    if let Some(first_layer) = goo_file.layers.get(0) {
+        let width = goo_file.header.x_resolution as u32;
+        let height = goo_file.header.y_resolution as u32;
+
+        let pixels = first_layer.decode_pixels(width, height);
+
+        let image_buffer = GrayImage::from_raw(width, height, pixels)
+            .expect("Failed to create image from pixel data");
+
+        let output_path = "first_layer.png";
+        image_buffer.save(output_path)?;
+
+        println!("First layer saved to {}", output_path);
+
+        // Open the image with the default application
+        #[cfg(target_os = "macos")]
+        Command::new("open").arg(output_path).status()?;
+
+        #[cfg(target_os = "windows")]
+        Command::new("cmd").args(&["/C", "start", "", output_path]).status()?;
+
+        #[cfg(target_os = "linux")]
+        Command::new("xdg-open").arg(output_path).status()?;
+
+    } else {
+        println!("No layers found in the file.");
+    }
+
+    Ok(())
+}
