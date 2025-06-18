@@ -20,6 +20,9 @@ image = { version = "0.25.1", optional = true }
 [dev-dependencies]
 goo = { path = ".", features = ["image"] }
 clap = { version = "4.5.7", features = ["derive"] }
+eframe = "0.31.1"
+egui_extras = { version = "0.31.1", features = ["image"] }
+rfd = "0.15.3"
 
 [features]
 # This feature adds in the `image` crate and allows you to create a `PreviewImage` from an `image::RgbaImage`.

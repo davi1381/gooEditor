@@ -106,6 +106,7 @@ pub mod slice_config;
 pub use encoded_layer::{LayerDecoder, LayerEncoder};
 pub use file::File as GooFile;
 pub use header_info::HeaderInfo;
+pub use layer_content::LayerContent;
 pub use misc::Run;
 pub use preview_image::PreviewImage;
 
