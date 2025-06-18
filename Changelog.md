@@ -7,6 +7,7 @@
 - Documented pixel editing in the README
 - Added integration tests for new helpers
 - Added `gui` example for visualizing layers
+=======
 
 # 0.1.0 &mdash; July 31st 2024
 
